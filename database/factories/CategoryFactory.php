@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class CategoryFactory extends Factory
 {
-    protected $model = Category::class;
-
     /**
      * Define the model's default state.
      *
@@ -20,8 +18,8 @@ class CategoryFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->word,
-            'slug' => $this->faker->slug
+            'name' => $this->faker->unique()->word(),
+            'slug' => $this->faker->slug()
         ];
     }
 }

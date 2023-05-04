@@ -18,14 +18,18 @@ class Post extends Model
     //     return 'slug';
     // }
     
-    // PARENT: category
+    // CHILD OF
     public function category(){
         return $this->belongsTo(Category::class);
     }
 
-    // PARENT: user
     public function author(){
         return $this->belongsTo(User::class, 'user_id');
+    }   
+
+    // PARENT TO
+    public function comments(){
+        return $this->hasMany(Comment::class);
     }   
 
     // scopes
