@@ -48,6 +48,6 @@ class SessionController extends Controller
 
         auth()->logout();
 
-        return redirect('/')->with('success', 'Goodbye, ' . $name . '!');
+        return back()->with('success', 'Goodbye, ' . $name . '!');
     }
 }
