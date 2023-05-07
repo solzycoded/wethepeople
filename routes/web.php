@@ -38,3 +38,21 @@ Route::post('/logout', [SessionController::class, 'destroy'])->middleware('auth'
 // LOGIN
 Route::get('/login', [SessionController::class, 'create'])->middleware('guest');
 Route::post('/login', [SessionController::class, 'store'])->middleware('guest');
+
+
+Route::get('/ping', function(){
+
+    $mailchimp = new \MailchimpMarketing\ApiClient();
+
+    $mailchimp->setConfig([
+        'apiKey' => config('services.mailchimp.key'),
+        'server' => 'us21'
+        // https://us21.admin.mailchimp.com/account/api/
+    ]);
+
+    $response = $mailchimp->ping->get();
+
+    dd($response);
+    // print_r($response);
+
+});
