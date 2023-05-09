@@ -12,6 +12,8 @@ use App\Http\Controllers\PostCommentsController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionController; 
 
+use App\Services\Newsletter; 
+use Illuminate\Validation\ValidationException;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,19 +42,19 @@ Route::get('/login', [SessionController::class, 'create'])->middleware('guest');
 Route::post('/login', [SessionController::class, 'store'])->middleware('guest');
 
 
-Route::get('/ping', function(){
-
-    $mailchimp = new \MailchimpMarketing\ApiClient();
-
-    $mailchimp->setConfig([
-        'apiKey' => config('services.mailchimp.key'),
-        'server' => 'us21'
-        // https://us21.admin.mailchimp.com/account/api/
+Route::post('/newsletter', function(Newsletter $newsletter){
+    request()->validate([
+        'email' => 'bail|required|email'
     ]);
 
-    $response = $mailchimp->ping->get();
+    try{
+        $newsletter->subscribe(request('email'));
+    } catch(\Exception $e){
+        throw ValidationException::withMessages([
+            'email' => 'This email could not be added to our newsletter list.'
+        ]);
+    }
 
-    dd($response);
-    // print_r($response);
-
+    return back()
+        ->with('success', 'You are now signed up, for our newsletter!');
 });
