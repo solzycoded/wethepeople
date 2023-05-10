@@ -6,19 +6,31 @@ use MailchimpMarketing\ApiClient;
 
 class Newsletter 
 {
-    public function subscribe(string $email){
-        $mailchimp = new ApiClient();
+    public function __construct(protected ApiClient $client){
+        // 
+    }
 
-        $mailchimp->setConfig([
-            'apiKey' => config('services.mailchimp.key'),
-            'server' => 'us21'
-        ]);
-    
-        $response = $mailchimp->lists->addListMember(config('services.mailchimp.lists.subscribers'), [
+    public function subscribe(string $email, string $list = null){ 
+        $mailchimp = $this->client();
+        $list ??= config('services.mailchimp.lists.subscribers');
+        
+        $response = $mailchimp->lists->addListMember($list, [
             'email_address' => $email,
-            'status'        => 'subscribed'
+            'status'        => 'subscribed' 
         ]);
 
         return $response;
     }
+
+    public function client(){
+        // $mailchimp = new ApiClient();
+        $this->client->setConfig([
+            'apiKey' => config('services.mailchimp.key'),
+            'server' => 'us21'
+        ]);
+
+        return $mailchimp;
+    }
 }
+
+

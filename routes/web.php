@@ -12,7 +12,8 @@ use App\Http\Controllers\PostCommentsController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionController; 
 
-use App\Services\Newsletter; 
+use App\Http\Controllers\NewsletterController; 
+
 use Illuminate\Validation\ValidationException;
 
 /*
@@ -25,8 +26,10 @@ use Illuminate\Validation\ValidationException;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// HOME
 Route::get('/', [PostController::class, 'index'])->name('home');
 
+// POSTS
 Route::get('/posts/{post:slug}', [PostController::class, 'show']);
 Route::post('/posts/{post:slug}/comment', [PostCommentsController::class, 'store']);
 
@@ -41,20 +44,5 @@ Route::post('/logout', [SessionController::class, 'destroy'])->middleware('auth'
 Route::get('/login', [SessionController::class, 'create'])->middleware('guest');
 Route::post('/login', [SessionController::class, 'store'])->middleware('guest');
 
-
-Route::post('/newsletter', function(Newsletter $newsletter){
-    request()->validate([
-        'email' => 'bail|required|email'
-    ]);
-
-    try{
-        $newsletter->subscribe(request('email'));
-    } catch(\Exception $e){
-        throw ValidationException::withMessages([
-            'email' => 'This email could not be added to our newsletter list.'
-        ]);
-    }
-
-    return back()
-        ->with('success', 'You are now signed up, for our newsletter!');
-});
+// SUBSCRIPTION
+Route::post('/newsletter', NewsletterController::class);
