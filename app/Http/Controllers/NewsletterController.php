@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-// use App\Services\Newsletter; 
+use App\Services\Newsletter;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class NewsletterController extends Controller
 {
@@ -12,7 +13,7 @@ class NewsletterController extends Controller
         request()->validate([
             'email' => 'bail|required|email'
         ]);
-    
+     
         $email = request('email');
     
         try{

@@ -14,8 +14,6 @@ use App\Http\Controllers\SessionController;
 
 use App\Http\Controllers\NewsletterController; 
 
-use Illuminate\Validation\ValidationException;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,6 +24,9 @@ use Illuminate\Validation\ValidationException;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// SUBSCRIPTION
+Route::post('/newsletter', NewsletterController::class);
+
 // HOME
 Route::get('/', [PostController::class, 'index'])->name('home');
 
@@ -43,6 +44,3 @@ Route::post('/logout', [SessionController::class, 'destroy'])->middleware('auth'
 // LOGIN
 Route::get('/login', [SessionController::class, 'create'])->middleware('guest');
 Route::post('/login', [SessionController::class, 'store'])->middleware('guest');
-
-// SUBSCRIPTION
-Route::post('/newsletter', NewsletterController::class);
