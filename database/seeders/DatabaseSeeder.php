@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
         // Category::factory(10)->create();
         // Post::factory(20)->create();
-        // Comment::factory(1)->create();
+        Comment::factory(3)->create();
 
         // $personal = Category::create([
         //     'name' => 'Personal',

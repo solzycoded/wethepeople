@@ -24,6 +24,11 @@ use App\Http\Controllers\NewsletterController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// ADMIN
+Route::get('/admin/posts/create', [PostController::class, 'create'])->middleware('admin');
+Route::post('/admin/posts', [PostController::class, 'store'])->middleware('admin');
+
 // SUBSCRIPTION
 Route::post('/newsletter', NewsletterController::class);
 

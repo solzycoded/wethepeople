@@ -8,8 +8,27 @@ use App\Models\Post;
 use App\Models\Category;
 
 class PostController extends Controller
-{
-    // read
+{   
+    // CREATE
+    public function create(){
+        $categories = Category::orderBy('name')->get();
+                        
+        return view('posts.create')
+            ->with(['categories' => $categories]);
+    }
+
+    public function store(){
+        request()->validate([
+            'title' => 'bail|required',
+            'excerpt' => 'nullable|required',
+            'body' => 'bail|required',
+            'category' => 'bail|required|integer|exists:categories,id'
+        ]);
+
+        
+    }
+
+    // READ
     public function index(){
         // request()->only('search');
         
@@ -27,4 +46,8 @@ class PostController extends Controller
             'post' => $post
         ]);
     }
+
+    // UPDATE
+
+    // DELETE
 }
