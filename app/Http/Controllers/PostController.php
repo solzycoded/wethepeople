@@ -12,20 +12,30 @@ class PostController extends Controller
     // CREATE
     public function create(){
         $categories = Category::orderBy('name')->get();
-                        
+        
         return view('posts.create')
             ->with(['categories' => $categories]);
     }
 
     public function store(){
-        request()->validate([
-            'title' => 'bail|required',
-            'excerpt' => 'nullable|required',
-            'body' => 'bail|required',
-            'category' => 'bail|required|integer|exists:categories,id'
+        
+
+        $attributes = request()->validate([
+            'title'       => 'bail|required',
+            'slug'        => 'bail|required|unique:posts,slug',
+            'thumbnail'   => 'bail|required|image', // it's retreiving the file properties from the "file input" tag
+            'excerpt'     => 'nullable|required',
+            'body'        => 'bail|required',
+            'category_id' => 'bail|required|integer|exists:categories,id'
         ]);
 
-        
+        // $attributes['slug'] = Str::slug($attributes['title']); // create a slug, from title
+        $attributes['user_id'] = auth()->user()->id; // get the user id, of the currently logged in user 
+        $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails'); // store file, in "thumbnails" folder and return the file path
+
+        Post::create($attributes);
+
+        return redirect('/');
     }
 
     // READ
