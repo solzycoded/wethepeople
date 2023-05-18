@@ -24,10 +24,8 @@
                 @enderror
             </div>
 
-            <div class="flex justify-end mt-6 border-t border-gray-200 pt-6">
-                <x-submit-button>
-                    Post
-                </x-submit-button>
+            <div class="flex justify-end mt-6 border-t border-gray-200 pt-6">       
+                <x-form.submit-button>Post</x-submit-button>
             </div>
         @else
             <div class="mt-5">

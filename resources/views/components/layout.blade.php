@@ -1,4 +1,4 @@
-<!doctype html> 
+<!doctype html>
 
 <title>Laravel From Scratch Blog</title>
 <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
@@ -23,16 +23,42 @@
 
             <div class="mt-8 md:mt-0 flex items-center">
                 @auth
-                    <span class="text-xs font-bold uppercase">Welcome, {{ auth()->user()->name }}!</span>
+                    <x-dropdown>
 
-                    <form method="POST" action="/logout" class="text-xs font-semibold text-black-50 ml-6">
-                        @csrf
+                        <x-slot name="trigger">
+                            <button @click="show = true" class="text-xs font-bold uppercase">
+                                Welcome, {{ auth()->user()->name }}!
+                            </button>
+                        </x-slot>
 
-                        <button type="submit" style="color: blue">Log Out</button>
-                    </form>
+                        {{-- dashboard --}}
+                        <x-dropdown-item href="/admin/dashboard">  
+                            Dashboard
+                        </x-dropdown-item>
+  
+                        {{-- new post --}}
+                        <x-dropdown-item href="/admin/posts/create" :active="request()->is('admin/posts/create')">
+                            New Post
+                        </x-dropdown-item>
+
+                        {{-- new post --}}
+                        <x-dropdown-item href="#"
+                            x-data="{}"
+                            @click.prevent="document.querySelector('#logout-form').submit()">
+                            Log Out
+                        </x-dropdown-item>
+                        
+                        <form id="logout-form" method="POST" action="/logout" class="hidden">
+                            @csrf
+
+                            {{-- <button type="submit" style="color: blue">Log Out</button> --}}
+                        </form>
+                    </x-dropdown>
                 @else
+
                     <a href="/register" class="text-xs font-bold uppercase">Register</a>
                     <a href="/login" class="text-xs font-bold uppercase ml-3">Login</a>
+                
                 @endguest
 
                 <a href="#newsletter" class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
