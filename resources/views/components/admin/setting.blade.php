@@ -8,14 +8,14 @@
     <div class="flex">
 
         {{-- side bar --}}
-        <aside class="w-48">
+        <aside class="w-48 flex-shrink-0">
             {{-- HEADER --}}
             <h4 class="font-semibold mb-4">Links</h4>
 
             <ul>
                 @php
                     $links = [
-                            ['title' => 'Dashboard', 'link' => 'dashboard'], 
+                            ['title' => 'All Posts', 'link' => 'posts'], 
                             ['title' => 'New Post', 'link' => 'posts/create']
                         ];
                 @endphp

@@ -8,26 +8,28 @@ use App\Models\User;
 
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostCommentsController;
+use App\Http\Controllers\AdminPostController;
 
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionController; 
 
-use App\Http\Controllers\NewsletterController; 
+use App\Http\Controllers\NewsletterController;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
+| Here is where you can register web routes for your application. These 
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
 */
 
 // ADMIN
-Route::get('/admin/posts/create', [PostController::class, 'create'])->middleware('admin');
-Route::post('/admin/posts', [PostController::class, 'store'])->middleware('admin');
+Route::get('/admin/posts', [AdminPostController::class, 'index'])->middleware('admin');
+Route::get('/admin/posts/create', [AdminPostController::class, 'create'])->middleware('admin');
+Route::post('/admin/posts', [AdminPostController::class, 'store'])->middleware('admin');
 
 // SUBSCRIPTION
 Route::post('/newsletter', NewsletterController::class);
