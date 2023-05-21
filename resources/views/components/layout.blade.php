@@ -26,7 +26,7 @@
                     <x-dropdown>
 
                         <x-slot name="trigger">
-                            <button @click="show = true" class="text-xs font-bold uppercase">
+                            <button @click="show = !show" class="text-xs font-bold uppercase">
                                 Welcome, {{ auth()->user()->name }}!
                             </button>
                         </x-slot>
