@@ -33,17 +33,30 @@
                             </button>
                         </x-slot>
 
-                        {{-- dashboard --}}
-                        <x-dropdown-item href="/admin/dashboard">  
-                            Dashboard
-                        </x-dropdown-item>
-  
-                        {{-- new post --}}
-                        <x-dropdown-item href="/admin/posts/create" :active="request()->is('admin/posts/create')">
-                            New Post
+                        {{-- DROP DOWNs --}}
+                        {{-- home page --}}
+                        <x-dropdown-item href="/" :active="request()->is('/')">
+                            Home
                         </x-dropdown-item>
 
-                        {{-- new post --}}
+                        {{-- ONLY FOR ADMIN --}}
+                        @if(auth()->user()->username=='solzy')
+                            {{-- dashboard & new post --}}
+                            @php
+                                $prefix = 'admin/posts';
+                                $dropDownMenus = [
+                                    ['title' => 'Dashboard', 'link'  => $prefix . ''],
+                                    ['title' => 'New Post',  'link'  => $prefix . '/create']
+                                ];
+                            @endphp
+                            @foreach ($dropDownMenus as $item)
+                                <x-dropdown-item href="{{ '/' . $item['link'] }}" :active="request()->is($item['link'])">
+                                    {{ $item['title'] }}
+                                </x-dropdown-item>
+                            @endforeach
+                        @endif
+
+                        {{-- log out --}}
                         <x-dropdown-item href="#"
                             x-data="{}"
                             @click.prevent="document.querySelector('#logout-form').submit()">

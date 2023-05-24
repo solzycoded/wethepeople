@@ -8,7 +8,7 @@
         name="{{ $name }}"
         id="{{ $name }}"
         required
-    >{{ old($name) }}</textarea>
+    >{{ $slot }}</textarea>
 
     <x-form.error :name="$name" />
 
