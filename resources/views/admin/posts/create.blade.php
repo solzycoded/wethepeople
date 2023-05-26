@@ -13,10 +13,14 @@
             <x-form.input :name="'thumbnail'" type="file" />
             
             {{-- excerpt (TEXTAREA) --}}
-            <x-form.textarea :name="'excerpt'" />
-
+            <x-form.textarea :name="'excerpt'">
+                {{ old('excerpt') }}
+            </x-form.textarea>
+            
             {{-- body (TEXTAREA) --}}
-            <x-form.textarea :name="'body'" />
+            <x-form.textarea :name="'body'">
+                {{ old('body') }}
+            </x-form.textarea>
    
             {{-- category (SELECT) --}}
             <x-form.field class="mb-6">

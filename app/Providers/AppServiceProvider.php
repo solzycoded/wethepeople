@@ -5,11 +5,14 @@ namespace App\Providers;
 // use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Gate;
 
 use App\Services\Newsletter as Newsletter; 
 use App\Services\Mailchimp\Newsletter as MailchimpNewsletter; 
 
 use MailchimpMarketing\ApiClient;
+
+use App\Models\User;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
     {
         app()->bind(Newsletter::class, function(){        
             $client = (new ApiClient)->setConfig([
-                'apiKey' => config('services.mailchimp.key'),
+                'apiKey' => config('services.mailchimp.key'), 
                 'server' => 'us21'
             ]);
 
@@ -39,5 +42,14 @@ class AppServiceProvider extends ServiceProvider
     {
         //  Paginator::useBootstrap();
         Model::unguard();
+
+        Gate::define('admin', function (User $user){
+            return ($user->username=='solzy');
+        });
+
+        // blade directive
+        // Blade::if('admin', function(){
+        //     return request()->user()?->can('admin');
+        // });
     }
 }

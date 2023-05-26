@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Models\Post;
-use App\Models\Category;
-use App\Models\User;
+// use App\Models\Post;
+// use App\Models\Category;
+// use App\Models\User;
 
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostCommentsController;
@@ -25,14 +25,18 @@ use App\Http\Controllers\NewsletterController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 // ADMIN
-Route::get('/admin/posts', [AdminPostController::class, 'index'])->middleware('admin');
-Route::get('/admin/posts/create', [AdminPostController::class, 'create'])->middleware('admin');
-Route::post('/admin/posts', [AdminPostController::class, 'store'])->middleware('admin');
-Route::get('/admin/posts/{post}/edit', [AdminPostController::class, 'edit'])->middleware('admin');
-Route::patch('/admin/posts/{post}', [AdminPostController::class, 'update'])->middleware('admin');
-Route::delete('/admin/posts/{post}', [AdminPostController::class, 'destroy'])->middleware('admin');
+Route::middleware('can:admin')->group(function(){
+    Route::get('/admin/posts', [AdminPostController::class, 'index']);
+    Route::get('/admin/posts/create', [AdminPostController::class, 'create']);
+    Route::post('/admin/posts', [AdminPostController::class, 'store']);
+    Route::get('/admin/posts/{post}/edit', [AdminPostController::class, 'edit']);
+    Route::patch('/admin/posts/{post}', [AdminPostController::class, 'update']);
+    Route::delete('/admin/posts/{post}', [AdminPostController::class, 'destroy']);
+    
+    // all of the stuff above, can be replace with THIS
+    // Route::resource('/admin/posts', AdminPostController::class)->except('show');
+});
 
 // SUBSCRIPTION
 Route::post('/newsletter', NewsletterController::class);
@@ -40,17 +44,20 @@ Route::post('/newsletter', NewsletterController::class);
 // HOME
 Route::get('/', [PostController::class, 'index'])->name('home');
 
+// REGISTER & LOGIN
+Route::middleware('guest')->group(function(){ 
+    // REGISTER
+    Route::get('/register', [RegisterController::class, 'create']); // MIDDLEWARE: a piece of logic, that will run, whenever a new request comes in
+    Route::post('/register', [RegisterController::class, 'store']);
+
+    // LOGIN
+    Route::get('/login', [SessionController::class, 'create']);
+    Route::post('/login', [SessionController::class, 'store']);
+});
+
 // POSTS
 Route::get('/posts/{post:slug}', [PostController::class, 'show']);
 Route::post('/posts/{post:slug}/comment', [PostCommentsController::class, 'store']);
 
-// REGISTER
-Route::get('/register', [RegisterController::class, 'create'])->middleware('guest'); // MIDDLEWARE: a piece of logic, that will run, whenever a new request comes in
-Route::post('/register', [RegisterController::class, 'store'])->middleware('guest');
-
 // LOGOUT
 Route::post('/logout', [SessionController::class, 'destroy'])->middleware('auth');
-
-// LOGIN
-Route::get('/login', [SessionController::class, 'create'])->middleware('guest');
-Route::post('/login', [SessionController::class, 'store'])->middleware('guest');

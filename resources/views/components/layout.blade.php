@@ -40,7 +40,7 @@
                         </x-dropdown-item>
 
                         {{-- ONLY FOR ADMIN --}}
-                        @if(auth()->user()->username=='solzy')
+                        @can('admin')
                             {{-- dashboard & new post --}}
                             @php
                                 $prefix = 'admin/posts';
@@ -54,7 +54,7 @@
                                     {{ $item['title'] }}
                                 </x-dropdown-item>
                             @endforeach
-                        @endif
+                        @endcan
 
                         {{-- log out --}}
                         <x-dropdown-item href="#"
