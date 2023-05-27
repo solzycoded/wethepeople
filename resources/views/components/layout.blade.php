@@ -9,7 +9,7 @@
 {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> --}}
 
 <style>
-    html {
+    html { 
         scroll-behavior: smooth;
     }
 </style>
@@ -19,7 +19,8 @@
         <nav class="md:flex md:justify-between md:items-center">
             <div>
                 <a href="/">
-                    <img src="/images/logo.svg" alt="Laracasts Logo" width="165" height="16">
+                    {{-- /images/logo.svg --}}
+                    <img src="/images/my/logo (no-bg).png" alt="wethepeople Logo" width="140" height="16">
                 </a>
             </div>
 
@@ -85,9 +86,11 @@
         {{ $slot }}
         
         <footer id="newsletter" class="bg-gray-100 border border-black border-opacity-5 rounded-xl text-center py-16 px-10 mt-16">
-            <img src="/images/lary-newsletter-icon.svg" alt="" class="mx-auto -mb-6" style="width: 145px;">
+            {{-- /images/lary-newsletter-icon.svg --}}
+            <img src="/images/my/icon (no-bg).png" alt="wethepeople icon" class="mx-auto -mb-1" style="width: 220px;">
+            
             <h5 class="text-3xl">Stay in touch with the latest posts</h5>
-            <p class="text-sm mt-3">Promise to keep the inbox clean. No bugs.</p>
+            <p class="text-sm mt-3">Promise to keep the inbox clean. No spamming.</p>
 
             <div class="mt-10">
                 <div class="relative inline-block mx-auto lg:bg-gray-200 rounded-full">
