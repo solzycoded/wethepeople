@@ -4,7 +4,7 @@
 
     <div class="py-6 px-5">
         <div>
-            <img src="{{ asset('storage/' . $post->thumbnail) }}" alt="Blog Post illustration" class="rounded-xl">
+            <img src="{{ asset('storage/' . $post->thumbnail) }}" alt="Blog Post illustration" class="rounded-xl" style="width: 1108px !important; height: 300px !important">
         </div>
 
         <div class="mt-8 flex flex-col justify-between">
@@ -41,7 +41,7 @@
                     <img src="/images/lary-avatar.svg" alt="Lary avatar">
                     <div class="ml-3">
                         <x-post-author-card :post="$post" />
-                        <h6>Mascot at Laracasts</h6>
+                        <h6>Mascot at wethepeople</h6>
                     </div>
                 </div>
 

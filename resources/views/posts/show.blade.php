@@ -16,7 +16,7 @@
                         <img src="/images/lary-avatar.svg" alt="Lary avatar">
                         <div class="ml-3 text-left">
                             <x-post-author-card :post="$post" />
-                            <!-- <h6>Mascot at Laracasts</h6> -->
+                            <!-- <h6>Mascot at wethepeople</h6> -->
                         </div>
                     </div>
                 </div>
