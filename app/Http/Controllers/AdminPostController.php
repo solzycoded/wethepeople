@@ -65,7 +65,7 @@ class AdminPostController extends Controller
         return Category::orderBy('name')->get();
     }
 
-    protected function validateInput(?Post $post = null): array{
+    protected function validateInput(?Post $post = null): array{ 
         $post ??= new Post();
 
         // create a slug, from title

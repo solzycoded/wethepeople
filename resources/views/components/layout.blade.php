@@ -1,30 +1,15 @@
 <!doctype html>
 
 <title>Laravel From Scratch Blog</title>
-{{-- <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet"> --}}
-<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+<link href="/css/app.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
 <script src="//unpkg.com/alpinejs" defer></script>
 
-<script src="https://cdn.tailwindcss.com"></script>
-
 <style>
-    /* tailwind adjustments */
-    .text-blue-500, .text-blue-300 {
-        color: #0CC0DF !important;
-    }
-
-    .bg-blue-500 {
-        background-color: #0CC0DF !important;
-    }
     
-    .border-blue-300 {
-        border-color: #0CC0DF !important;
-    }
-
-    html { 
-        scroll-behavior: smooth !important;
-    }
 </style>
 
 <body style="font-family: Open Sans, sans-serif">
@@ -57,10 +42,11 @@
                         @can('admin')
                             {{-- dashboard & new post --}}
                             @php
-                                $prefix = 'admin/posts';
+                                $prefix = 'admin/';
                                 $dropDownMenus = [
-                                    ['title' => 'Dashboard', 'link'  => $prefix . ''],
-                                    ['title' => 'New Post',  'link'  => $prefix . '/create']
+                                    ['title' => 'Dashboard', 'link'  => $prefix . 'posts'],
+                                    ['title' => 'New Post',  'link'  => $prefix . 'posts/create'],
+                                    ['title' => 'Categories',  'link'  => $prefix . 'categories']
                                 ];
                             @endphp
                             @foreach ($dropDownMenus as $item)
