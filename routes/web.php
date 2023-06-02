@@ -7,6 +7,7 @@ use App\Http\Controllers\PostCommentsController;
 use App\Http\Controllers\AdminPostController;
 
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\TagController as AdminTagController;
 
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionController; 
@@ -43,6 +44,14 @@ Route::middleware('can:admin')->group(function(){
     Route::get('/admin/categories/{category}/edit', [AdminCategoryController::class, 'edit']);
     Route::patch('/admin/categories/{category}', [AdminCategoryController::class, 'update']);
     Route::delete('/admin/categories/{category}', [AdminCategoryController::class, 'destroy']);
+
+    // TAGS
+    Route::get('/admin/tags', [AdminTagController::class, 'index']);
+    Route::get('/admin/tags/create', [AdminTagController::class, 'create']);
+    Route::post('/admin/tags', [AdminTagController::class, 'store']);
+    Route::get('/admin/tags/{tag}/edit', [AdminTagController::class, 'edit']);
+    Route::patch('/admin/tags/{tag}', [AdminTagController::class, 'update']);
+    Route::delete('/admin/tags/{tag}', [AdminTagController::class, 'destroy']);
 
     // all of the stuff above, can be replace with THIS
     // Route::resource('/admin/posts', AdminPostController::class)->except('show');

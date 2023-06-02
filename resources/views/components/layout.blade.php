@@ -44,9 +44,10 @@
                             @php
                                 $prefix = 'admin/';
                                 $dropDownMenus = [
-                                    ['title' => 'Dashboard', 'link'  => $prefix . 'posts'],
-                                    ['title' => 'New Post',  'link'  => $prefix . 'posts/create'],
-                                    ['title' => 'Categories',  'link'  => $prefix . 'categories']
+                                    ['title' => 'Dashboard', 'link'   => $prefix . 'posts'],
+                                    ['title' => 'New Post', 'link'    => $prefix . 'posts/create'],
+                                    ['title' => 'Categories', 'link'  => $prefix . 'categories'],
+                                    ['title' => 'Tags', 'link'        => $prefix . 'tags']
                                 ];
                             @endphp
                             @foreach ($dropDownMenus as $item)

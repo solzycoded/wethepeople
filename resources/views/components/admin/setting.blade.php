@@ -18,7 +18,9 @@
                             ['title' => 'All Posts', 'link' => 'posts'], 
                             ['title' => 'New Post', 'link' => 'posts/create'],
                             ['title' => 'All Categories', 'link' => 'categories'],
-                            ['title' => 'New Category', 'link' => 'categories/create']
+                            ['title' => 'New Category', 'link' => 'categories/create'],
+                            ['title' => 'All Tags', 'link' => 'tags'],
+                            ['title' => 'New Tag', 'link' => 'tags/create']
                         ];
                 @endphp
 

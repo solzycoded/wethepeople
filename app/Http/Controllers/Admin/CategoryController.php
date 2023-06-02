@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
- 
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 
 use App\Models\Category;
 
@@ -15,14 +14,14 @@ class CategoryController extends Controller
     // CREATE
     public function create(){
         return view('admin.categories.create');
-    }
+    } 
     
     public function store(){
         $attributes = $this->validateInput();
         
         Category::create($attributes);
 
-        return redirect('/admin/categories'); // this will change, LATER
+        return redirect('/admin/categories');
     }
 
     // READ
@@ -57,15 +56,6 @@ class CategoryController extends Controller
         return back()->with('success', 'Category Deleted!');
     }
     
-    // parent::boot();
-
-    // static::deleting(function($model)
-    // {
-    //     if ($model->forceDeleting) {
-    //         $model->roles()->detach();
-    //     }
-    // });
-
     // OTHERS
     protected function validateInput(?Category $category = null): array{
         $category ??= new Category();
@@ -77,8 +67,19 @@ class CategoryController extends Controller
                 Rule::unique('categories', 'name')->ignore($category)
             ]
         ]);
-        $attributes['slug'] = Category::slug($attributes['name']);
+        $attributes['slug'] = $this->slug($attributes['name']);
 
         return $attributes;
+    }
+
+    private function slug($name, $slug = ""){
+        $slug = Str::slug($name . $slug);
+
+        $slugExists = Category::where('slug', 'like', '%' . $slug)->exists();
+        if($slugExists){
+            return $this->slug($name, $slug);
+        }
+
+        return $slug;
     }
 }
