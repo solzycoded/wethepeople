@@ -17,6 +17,7 @@
                     $links = [
                             ['title' => 'All Posts', 'link' => 'posts'], 
                             ['title' => 'New Post', 'link' => 'posts/create'],
+                            ['title' => 'All Categories', 'link' => 'categories'],
                             ['title' => 'New Category', 'link' => 'categories/create']
                         ];
                 @endphp

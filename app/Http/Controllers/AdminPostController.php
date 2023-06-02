@@ -35,7 +35,7 @@ class AdminPostController extends Controller
 
     // UPDATE
     public function edit(Post $post){
-        return view(
+        return view( 
             'admin.posts.edit',
             [
                 'post' => $post,

@@ -18,6 +18,13 @@ class Post extends Model
     //     return 'slug';
     // }
     
+    // DELETE relations
+    public function delete() {
+        $this->posts()->comments();
+        $this->posts()->postTags();
+        parent::delete();
+    }
+
     // CHILD OF
     public function category(){
         return $this->belongsTo(Category::class);
@@ -31,6 +38,11 @@ class Post extends Model
     public function comments(){
         return $this->hasMany(Comment::class);
     }   
+
+    // PARENT TO
+    public function postTags(){
+        return $this->hasMany(PostTag::class);
+    }
 
     // scopes
     public function scopeFilter($query, array $filters){

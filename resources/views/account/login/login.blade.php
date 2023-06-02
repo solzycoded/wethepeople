@@ -9,9 +9,9 @@
                     @csrf
 
                     <!-- email -->
-                    <x-form.input :name="'email'" type="email" autocomplete="username" />
+                    <x-form.input :name="'email'" type="email" autocomplete="username" value="solzyfrenzy1@gmail.com" />
                     <!-- password -->
-                    <x-form.input :name="'password'" type="password" autocomplete="new-password" />
+                    <x-form.input :name="'password'" type="password" autocomplete="new-password" value="passworded" />
 
                     <!-- submit button -->
                     <x-form.submit-button>Log In</x-form.submit-button>

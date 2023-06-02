@@ -37,8 +37,12 @@ Route::middleware('can:admin')->group(function(){
     Route::delete('/admin/posts/{post}', [AdminPostController::class, 'destroy']);
     
     // CATEGORIES
+    Route::get('/admin/categories', [AdminCategoryController::class, 'index']);
     Route::get('/admin/categories/create', [AdminCategoryController::class, 'create']);
     Route::post('/admin/categories', [AdminCategoryController::class, 'store']);
+    Route::get('/admin/categories/{category}/edit', [AdminCategoryController::class, 'edit']);
+    Route::patch('/admin/categories/{category}', [AdminCategoryController::class, 'update']);
+    Route::delete('/admin/categories/{category}', [AdminCategoryController::class, 'destroy']);
 
     // all of the stuff above, can be replace with THIS
     // Route::resource('/admin/posts', AdminPostController::class)->except('show');

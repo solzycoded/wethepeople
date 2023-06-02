@@ -22,8 +22,8 @@ return new class extends Migration
             $table->text('body');
             $table->timestamps();
             $table->timestamp('published_at')->nullable();
-            $table->foreignId('category_id');
-            $table->foreignId('user_id');
+            $table->foreignId('category_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
         });
     }
 

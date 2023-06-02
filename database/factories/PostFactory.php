@@ -24,9 +24,10 @@ class PostFactory extends Factory
             'user_id' => User::factory(),
             'category_id' => Category::factory(),
             'title' => $this->faker->unique()->sentence(),
+            'thumbnail' => 'thumbnails\3LqSTVXtqgBv9gymHiznL9AW32GPyNA8iv29rnBk.png',
             'excerpt' => $this->faker->sentence(),
             'body' => $this->faker->paragraph(),
             'slug' => $this->faker->unique()->slug()
         ];
     }
-}
+} 

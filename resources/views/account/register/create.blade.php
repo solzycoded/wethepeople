@@ -19,13 +19,13 @@
                     @endif
 
                     <!-- name -->
-                    <x-form.input :name="'name'" />
+                    <x-form.input :name="'name'" value="Solomon Fidelis" />
                     <!-- username -->
-                    <x-form.input :name="'username'" />
+                    <x-form.input :name="'username'" value="solzy" />
                     <!-- email -->
-                    <x-form.input :name="'email'" type="email" autocomplete="username" />
+                    <x-form.input :name="'email'" type="email" autocomplete="username" value="solzyfrenzy1@gmail.com" />
                     <!-- password -->
-                    <x-form.input :name="'password'" type="password" autocomplete="new-password" />
+                    <x-form.input :name="'password'" type="password" autocomplete="new-password" value="passworded" />
                     
                     <!-- submit button -->
                     <x-form.submit-button>Submit</x-form.submit-button>
