@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Str;
 
 use App\Models\Category;
 
@@ -67,19 +66,8 @@ class CategoryController extends Controller
                 Rule::unique('categories', 'name')->ignore($category)
             ]
         ]);
-        $attributes['slug'] = $this->slug($attributes['name']);
+        $attributes['slug'] = $this->slug($attributes['name'], $category);
 
         return $attributes;
-    }
-
-    private function slug($name, $slug = ""){
-        $slug = Str::slug($name . $slug);
-
-        $slugExists = Category::where('slug', 'like', '%' . $slug)->exists();
-        if($slugExists){
-            return $this->slug($name, $slug);
-        }
-
-        return $slug;
     }
 }

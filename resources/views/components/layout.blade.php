@@ -8,9 +8,8 @@
 
 <script src="//unpkg.com/alpinejs" defer></script>
 
-<style>
-    
-</style>
+{{-- I ADDED THIS, COS I WON'T NEED TO RELOAD THE BROWSER, TO SEE MY UPDATE --}}
+@vite(['resources/js/app.js'])
 
 <body style="font-family: Open Sans, sans-serif">
     <section class="px-6 py-8">

@@ -69,19 +69,8 @@ class TagController extends Controller
                 Rule::unique('tags', 'name')->ignore($tag)
             ]
         ]);
-        $attributes['slug'] = $this->slug($attributes['name']);
+        $attributes['slug'] = $this->slug($attributes['name'], $tag);
 
         return $attributes;
-    }
-
-    private function slug($name, $slug = ""){
-        $slug = Str::slug($name . $slug);
-
-        $slugExists = Tag::where('slug', 'like', '%' . $slug)->exists();
-        if($slugExists){
-            return $this->slug($name, $slug);
-        }
-
-        return $slug;
     }
 }

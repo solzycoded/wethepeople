@@ -6,8 +6,6 @@
 
             {{-- title --}}
             <x-form.input :name="'title'" value="{{ old('title', $post->title) }}" />
-            {{-- slug --}}
-            <x-form.input :name="'slug'" value="{{ old('slug', $post->slug) }}" />
             {{-- thumbnail --}}
             <div class="flex mt-6">
                 <div class="flex-1">
@@ -50,6 +48,37 @@
                 </select>
 
                 <x-form.error :name="'category_id'" />
+
+            </x-form.field>
+
+            {{-- tags (SELECT) --}}
+            <x-form.field class="mb-6">
+
+                @php
+                    $title = 'tags';
+                    $tagIds = $post->postTags;
+                @endphp
+
+                <x-form.label :name="$title" />
+                
+                {{-- check if tag_id exists, in $post->postTags --}}
+                <select name="tag_ids[]" id="{{ $title }}" multiple>
+                    @foreach ($tags as $tag)
+                        <option 
+                            {{ (in_array($tag->id, (array) old('tag_ids')) || $tagIds->contains($tag->id)) ? 'selected' : '' }} 
+                            value="{{ $tag->id }}" >
+                            {{ ucwords($tag->name) }}
+                        </option>
+                    @endforeach
+                </select>
+                <p>
+                    <small>
+                        Can't find the tag, you want? Create one 
+                        <a href="/admin/tags/create" class="text-blue-500">here</a>
+                    </small>
+                </p>
+                
+                <x-form.error :name="'tag_ids'" />
 
             </x-form.field>
 
