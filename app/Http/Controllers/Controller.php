@@ -15,11 +15,16 @@ class Controller extends BaseController
 
     // CUSTOM CODE
     public function slug($name, $model, $slug = ""){
-        $slug = Str::slug($name . $slug);
+        if(is_null($model->id) || ($model->name!==$name && $model->title!==$name)){
+            $slug = Str::slug($name . $slug);
 
-        $slugExists = $model->where('slug', 'like', '%' . $slug)->exists();
-        if($slugExists){
-            return $this->slug($name, $model, $slug);
+            $slugExists = $model->where('slug', 'like', '%' . $slug)->exists();
+            if($slugExists){
+                return $this->slug($name, $model, Str::random(2));
+            }
+        }
+        else{
+            $slug = $model->slug;
         }
 
         return $slug;

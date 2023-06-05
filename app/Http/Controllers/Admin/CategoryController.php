@@ -63,6 +63,7 @@ class CategoryController extends Controller
             'name' => [
                 'bail', 
                 'required', 
+                'max:100', 
                 Rule::unique('categories', 'name')->ignore($category)
             ]
         ]);

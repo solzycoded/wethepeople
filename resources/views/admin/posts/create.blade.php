@@ -4,7 +4,7 @@
             @csrf
 
             {{-- title --}}
-            <x-form.input :name="'title'" value="something" required />
+            <x-form.input :name="'title'" value="something" maxlength="120" required />
 
             {{-- thumbnail --}}
             <x-form.input :name="'thumbnail'" value="something" type="file" required />

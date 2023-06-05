@@ -66,6 +66,7 @@ class TagController extends Controller
             'name' => [
                 'bail', 
                 'required', 
+                'max:100',
                 Rule::unique('tags', 'name')->ignore($tag)
             ]
         ]);

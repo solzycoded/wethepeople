@@ -4,7 +4,7 @@
             @csrf
 
             {{-- category --}}
-            <x-form.input :name="'name'" required />
+            <x-form.input :name="'name'" maxlength="100" required />
 
             <x-form.submit-button>Create</x-submit-button>
         </form>

@@ -5,7 +5,7 @@
             @method('PATCH')
 
             {{-- name --}}
-            <x-form.input :name="'name'" value="{{ old('name', $tag->name) }}" requried />
+            <x-form.input :name="'name'" value="{{ old('name', $tag->name) }}" maxlength="100" requried />
             
             <x-form.submit-button>Update</x-submit-button>
 

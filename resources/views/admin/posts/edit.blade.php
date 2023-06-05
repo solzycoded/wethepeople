@@ -5,7 +5,7 @@
             @method('PATCH')
 
             {{-- title --}}
-            <x-form.input :name="'title'" value="{{ old('title', $post->title) }}" />
+            <x-form.input :name="'title'" value="{{ old('title', $post->title) }}" maxlength="120" />
             {{-- thumbnail --}}
             <div class="flex mt-6">
                 <div class="flex-1">
@@ -19,13 +19,9 @@
             </div>
             
             {{-- excerpt (TEXTAREA) --}}
-            <x-form.textarea :name="'excerpt'">
-                {{ old('excerpt', $post->excerpt) }}
-            </x-form.textarea>
+            <x-form.textarea :name="'excerpt'">{{ old('excerpt', $post->excerpt) }}</x-form.textarea>
             {{-- body (TEXTAREA) --}}
-            <x-form.textarea :name="'body'">
-                {{ old('body', $post->body) }}
-            </x-form.textarea>
+            <x-form.textarea :name="'body'">{{ old('body', $post->body) }}</x-form.textarea>
    
             {{-- category (SELECT) --}}
             <x-form.field class="mb-6">
@@ -56,16 +52,20 @@
 
                 @php
                     $title = 'tags';
-                    $tagIds = $post->postTags;
+                    $tagIds = (array) $post->postTags;
                 @endphp
 
                 <x-form.label :name="$title" />
-                
+                {{-- {{ dd(array_search(3, $tagIds)) }} --}}
+
+                {{-- I NEED to check, if any of the "id's" in "tags", exists in "tagIds" --}}
+
                 {{-- check if tag_id exists, in $post->postTags --}}
                 <select name="tag_ids[]" id="{{ $title }}" multiple>
                     @foreach ($tags as $tag)
                         <option 
-                            {{ (in_array($tag->id, (array) old('tag_ids')) || $tagIds->contains($tag->id)) ? 'selected' : '' }} 
+                            {{-- (in_array($tag->id, (array) old('tag_ids'))  ||  --}}
+                            {{ array_search($tag->id, array_column($tagIds, 'post_id')) ? 'selected' : '' }}
                             value="{{ $tag->id }}" >
                             {{ ucwords($tag->name) }}
                         </option>
@@ -77,7 +77,7 @@
                         <a href="/admin/tags/create" class="text-blue-500">here</a>
                     </small>
                 </p>
-                
+
                 <x-form.error :name="'tag_ids'" />
 
             </x-form.field>

@@ -10,8 +10,6 @@ class PostTagController extends Controller
 {
     // CREATE
     public function store($postId, $tagIds){
-        // YOU MIGHT NEED TO delete a POSTTAG
-
         foreach ($tagIds as $tagId) {
             $this->storeTag($postId, $tagId);
         }

@@ -84,7 +84,7 @@ class AdminPostController extends Controller
         $post ??= new Post();
 
         $attributes = request()->validate([
-            'title'       => ['bail', 'required', Rule::unique('posts', 'title')->ignore($post)],
+            'title'       => ['bail', 'required', 'max:120', Rule::unique('posts', 'title')->ignore($post)],
             'thumbnail'   => $post->exists ? ['bail', 'image'] : ['bail', 'required', 'image'], // it's retreiving the file properties from the "file input" tag
             'excerpt'     => 'nullable|required',
             'body'        => 'bail|required',
