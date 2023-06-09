@@ -3,7 +3,7 @@
         <form method="POST" action="/admin/posts/{{ $post->id }}" enctype="multipart/form-data">     
             @csrf
             @method('PATCH')
-
+            
             {{-- title --}}
             <x-form.input :name="'title'" value="{{ old('title', $post->title) }}" maxlength="120" />
             {{-- thumbnail --}}
@@ -52,11 +52,9 @@
 
                 @php
                     $title = 'tags';
-                    $tagIds = (array) $post->postTags;
                 @endphp
 
                 <x-form.label :name="$title" />
-                {{-- {{ dd(array_search(3, $tagIds)) }} --}}
 
                 {{-- I NEED to check, if any of the "id's" in "tags", exists in "tagIds" --}}
 
@@ -64,8 +62,7 @@
                 <select name="tag_ids[]" id="{{ $title }}" multiple>
                     @foreach ($tags as $tag)
                         <option 
-                            {{-- (in_array($tag->id, (array) old('tag_ids'))  ||  --}}
-                            {{ array_search($tag->id, array_column($tagIds, 'post_id')) ? 'selected' : '' }}
+                            {{ in_array($tag->id, (array) old('tag_ids')) || $tag->tagExists($post->id) ? 'selected' : '' }}
                             value="{{ $tag->id }}" >
                             {{ ucwords($tag->name) }}
                         </option>
@@ -81,8 +78,32 @@
                 <x-form.error :name="'tag_ids'" />
 
             </x-form.field>
+            
+            {{-- status (SELECT) --}}
+            <x-form.field class="mb-6">
 
-            <x-form.submit-button>Publish</x-submit-button>
+                @php
+                    $title = 'status';
+                @endphp
+
+                <x-form.label :name="$title" />
+                
+                <select name="status_id" id="{{ $title }}" required>
+                    <option value="" selected>Choose a status</option>
+                    
+                    @foreach ($status as $status)
+                        <option {{ old('status_id', $post->status_id)==$status->id ? 'selected' : '' }} 
+                            value="{{ $status->id }}">
+                            {{ ucwords($status->name) }}
+                        </option>
+                    @endforeach
+                </select>
+
+                <x-form.error :name="'status_id'" />
+
+            </x-form.field>
+
+            <x-form.submit-button>Save</x-submit-button>
 
         </form>
     </x-admin.setting>

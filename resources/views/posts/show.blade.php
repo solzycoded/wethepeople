@@ -7,11 +7,9 @@
                 <div class="col-span-5 lg:text-center lg:pt-14 mb-10">
                     <img src="{{ asset('storage/' . $post->thumbnail) }}" alt="Post image" class="rounded-xl single-post-image">
 
-                    <p class="mt-4 block text-gray-400 text-xs">
-                        Published <time> {{ $post->created_at->diffForHumans() }}</time>
-                    </p>
+                    <x-post.status :post="$post" class="mt-4 text-left" />
 
-                    <div class="flex items-center lg:justify-center text-sm mt-4">
+                    <div class="flex items-center lg:justify-left text-sm mt-4">
                         <x-post-author-card :post="$post" class="text-left" />
                     </div>
                 </div>
@@ -32,21 +30,27 @@
 
                             Back to Posts
                         </a>
+                    </div>
+
+                    <div class="flex justify-between">
+                        <h1 class="font-bold text-3xl lg:text-4xl mb-10">
+                            {{ $post->title }}
+                        </h1>
 
                         <div class="space-x-2">
                             <x-category-button :category="$post->category" />
                         </div>
                     </div>
 
-                    <h1 class="font-bold text-3xl lg:text-4xl mb-10">
-                        {{ $post->title }}
-                    </h1>
-
                     <div class="space-y-4 lg:text-lg leading-loose">
                         {{ $post->body }}
                     </div>
+
+                    <x-tags.show :tags="$post->postTags" :all="true" class="mt-7" />
                 </div>
             </article>
+            
+            <hr>
 
             <!-- comments -->
             <section class="col-span-8 col-start-5 mt-20 space-y-6">

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Admin\PostTagController;
+use App\Http\Controllers\Admin\StatusController;
 
 use Illuminate\Validation\Rule;
 
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\Tag;
+use App\Models\Status;
 
 class AdminPostController extends Controller
 {
@@ -16,10 +18,7 @@ class AdminPostController extends Controller
     public function create(){
         return view('admin.posts.create')
             ->with(
-                [
-                    'categories' => $this->categoryIndex(),
-                    'tags' => Tag::orderBy('name')->get()
-                ]
+                $this->postsData()
             );
     }
 
@@ -30,6 +29,7 @@ class AdminPostController extends Controller
 
         $post = Post::create($attributes);
 
+        $this->updatePublishDate($post->status_id, $post->id);
         (new PostTagController())->store($post->id, $tagIds);
 
         return redirect('/admin/posts');
@@ -46,24 +46,21 @@ class AdminPostController extends Controller
     public function edit(Post $post){
         return view( 
             'admin.posts.edit',
-            [
-                'post' => $post,
-                'categories' => $this->categoryIndex(),
-                'tags' => Tag::orderBy('name')->get()
-            ]
+            array_merge(
+                ['post' => $post], 
+                $this->postsData()
+            )
         );
     }
 
     public function update(Post $post){
-        $attributes = $this->validateInput($post);
-        
-        $tagIds = $this->getTagIds($attributes);
+        $attributes = $this->validateInput($post); // validate input and store data
+        $tagIds = $this->getTagIds($attributes); // get tag ids
 
         $post->update($attributes);
 
-        // dd($tagIds);
-
-        (new PostTagController())->store($post->id, $tagIds);
+        $this->updatePublishDate($post->status_id, $post->id);
+        (new PostTagController())->store($post->id, $tagIds); // store posts, with tag
 
         return back()->with('success', 'Post Updated!');
     }
@@ -89,6 +86,7 @@ class AdminPostController extends Controller
             'excerpt'     => 'nullable|required',
             'body'        => 'bail|required',
             'category_id' => 'bail|required|integer|exists:categories,id',
+            'status_id' => 'bail|required|integer|exists:status,id',
             'tag_ids' => 'array',
             'tag_ids.*' => 'bail|integer|distinct|exists:tags,id'
         ]);
@@ -107,10 +105,26 @@ class AdminPostController extends Controller
         return $attributes;
     }
 
-    private function getTagIds(&$attributes){
+    private function getTagIds(&$attributes): array{
         $tagIds = $attributes['tag_ids'];
         unset($attributes['tag_ids']);
 
         return $tagIds;
+    }
+
+    private function postsData(): array{
+        return [
+            'categories' => $this->categoryIndex(),
+            'tags' => Tag::orderBy('name')->get(),
+            'status' => Status::orderBy('name')->get()
+        ];
+    }
+
+    private function updatePublishDate($statusId, $postId){
+        $isPublished = (new StatusController())->checkStatus($statusId, 'published');
+
+        $post = Post::find($postId);
+        $post->published_at = $isPublished ? now() : null;
+        $post->save();
     }
 }

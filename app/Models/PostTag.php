@@ -9,6 +9,8 @@ class PostTag extends Model
 {
     use HasFactory;
     
+    // protected $with = ['tag'];
+
     // CHILD OF
     public function post(){
         return $this->belongsTo(Post::class);
@@ -26,4 +28,11 @@ class PostTag extends Model
     public function tags(){
         return $this->hasMany(Tag::class);
     }
+
+    // SCOPES
+    // public function scopeTagExists($query, $tagId){
+    //     return $query->when($tagId ?? false, fn($query, $tagid) => 
+    //         $query->where('tag_id', $tagid)
+    //     )->exists();
+    // }
 }

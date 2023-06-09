@@ -39,20 +39,27 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }   
 
-    // PARENT TO
     public function postTags(){
         return $this->hasMany(PostTag::class);
     }
 
-    // scopes
+    // SCOPES
     public function scopeFilter($query, array $filters){
         $query->when($filters['search'] ?? false, fn($query, $search) => 
             $query->where(fn($query) =>
                 $query->where('title', 'like', '%' . $search . '%')
                 ->orWhere('body', 'like', '%' . $search . '%')
             )
-        ); 
+        );
 
+        // ?tag=query
+        if(isset($filters['tag'])){
+            $query->join('post_tags', 'post_tags.post_id', 'posts.id')
+                ->join('tags', 'tags.id', 'post_tags.tag_id')
+                ->where('tags.slug', $filters['tag']);
+        }
+
+        // ?categroy=query
         $query->when($filters['category'] ?? false, 
             fn($query, $category) => 
                 $query->whereHas('category', 
@@ -61,6 +68,7 @@ class Post extends Model
             )
         );
 
+        // ?author=query
         $query->when($filters['author'] ?? false, 
             fn($query, $author) => 
                 $query->whereHas('author', 
@@ -68,5 +76,5 @@ class Post extends Model
                         $query->where('username', $author)
             )
         );
-    }     
+    }  
 }

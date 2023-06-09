@@ -20,9 +20,7 @@
                         </a>
                     </h1>
 
-                    <span class="mt-2 block text-gray-400 text-xs">
-                        Published <time>{{ $post->created_at->diffForHumans() }}</time>
-                    </span>
+                    <x-post.status :post="$post" />
                 </div>
             </header>
 
@@ -30,10 +28,8 @@
                 <p>
                     {!! $post->excerpt !!}
                 </p>
-<!-- 
-                <p class="mt-4">
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                </p> -->
+                
+                <x-tags.show :tags="$post->postTags" />
             </div>
 
             <footer class="flex justify-between items-center mt-8">
@@ -47,6 +43,7 @@
                     >Read More</a>
                 </div>
             </footer>
+
         </div>
 
     </div>

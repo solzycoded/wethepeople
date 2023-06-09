@@ -11,6 +11,8 @@ class Tag extends Model
 {
     use HasFactory;
 
+    protected $with = ['postTags'];
+
     // PARENT TO
     public function postTags(){
         return $this->hasMany(PostTag::class);
@@ -23,4 +25,14 @@ class Tag extends Model
     }
 
     // SCOPES
+    public function scopeTagExists($query, $postId){ // i'm likely going to change this, later... i think there's a better way to do it
+        return $query->when($postId ?? false,
+            fn($query, $postId) => 
+                $query->whereHas('postTags', 
+                    fn($query) => 
+                        $query->where('post_id', $postId)
+                            ->where('tag_id', $this->id)
+            )
+        )->exists();
+    }
 }

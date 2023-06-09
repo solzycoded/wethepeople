@@ -18,9 +18,7 @@
                         <a href="/posts/{{ $post->slug }}">{{ $post->title }}</a>
                     </h1>
 
-                    <span class="mt-2 block text-gray-400 text-xs">
-                        Published <time>{{ $post->created_at->diffForHumans() }}</time>
-                    </span>
+                    <x-post.status :post="$post" />
                 </div>
             </header>
 
@@ -29,14 +27,12 @@
                     {!! $post->excerpt !!}
                 </p>
 
-                <!-- <p class="mt-4">
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                </p> -->
+                <x-tags.show :tags="$post->postTags" />
             </div>
 
             <footer class="flex justify-between items-center mt-8">
                 <div class="flex items-center text-sm">
-                    <x-post-author-card :post="$post" />
+                    <x-post-author-card :post="$post" /> 
                 </div>
 
                 <div class="hidden lg:block">
