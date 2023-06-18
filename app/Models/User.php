@@ -27,6 +27,8 @@ class User extends Authenticatable
     protected $table = 'users';
     protected $guarded = [];
 
+    protected $with = ['followers'];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -54,5 +56,27 @@ class User extends Authenticatable
     // CHILD: post
     public function posts(){
         return $this->hasMany(Post::class);
+    }
+
+    // CHILD: followers
+    public function followers(){
+        return $this->hasMany(Follower::class, 'follower_id');
+    }
+
+    public function followees(){
+        return $this->hasMany(Follower::class, 'followee_id');
+    }
+
+    // SCOPES
+    public function scopeFollowing($query, $followerId){
+        return $query->when($followerId ?? false, 
+            fn($query, $followerId) => 
+                $query->whereHas('followers', 
+                    fn($query) => 
+                        $query
+                            ->where('follower_id', $followerId)
+                            ->where('followee_id', $this->id)
+            )
+        )->exists();
     }
 }

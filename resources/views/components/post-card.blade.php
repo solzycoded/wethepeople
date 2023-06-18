@@ -20,7 +20,7 @@
                         </a>
                     </h1>
 
-                    <x-post.status :post="$post" />
+                    <x-post.status :time="$post->published_at" />
                 </div>
             </header>
 

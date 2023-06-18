@@ -1,10 +1,14 @@
 <!doctype html>
 
 <title>Laravel From Scratch Blog</title>
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+
 <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 <link href="/css/app.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
 <script src="//unpkg.com/alpinejs" defer></script>
 
@@ -134,6 +138,46 @@
 
     <x-flash />
 </body>
+
+{{-- SCRIPTS --}}
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
+<script src="/js/request/ajax.js"></script>
+
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    const something = function(){
+        $('#follow-btn').click(function () { 
+            let followBtn = $(this);
+            let content = $.trim(followBtn.text()).toLowerCase();
+
+            let follow = content=="follow" ? true : false;
+
+            let follower = followBtn.attr('follower');
+            let followee = followBtn.attr('followee');
+
+            const ajax = new Ajax(
+                'POST', 
+                '/follow-author', 
+                {follower_id: follower, followee_id: followee, follow: follow}
+            );
+            ajax.request(function (response){}, failureResponse);
+        });
+    }
+
+    const failureResponse = function (response){
+        // trigger failure action (the follow button would be unfollowed)
+        $('#follow-btn').click();
+    }
+
+    something();
+</script>
+
 
 {{-- ABOUT US IDEAS --}}
     {{-- 1. this is a platform of the people, built "for the people", by Solzy. on here feel free, to say what you want, tell your story, anonymously. --}}

@@ -11,11 +11,23 @@
                 </div>
             </x-admin.index.table-column>
 
-            {{-- <td class="px-6 py-4 whitespace-nowrap">
-                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                    Published
+            <td class="px-6 py-4 whitespace-nowrap">
+                @php
+                    $status = $post->status->name;
+                    $statusColor = 'green';
+
+                    if($status=='draft'){
+                        $statusColor = 'yellow';
+                    }
+                    else if($status=='withdrawn'){
+                        $statusColor = 'red';
+                    }
+                @endphp
+
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-{{ $statusColor }}-100 text-{{ $statusColor }}-800 capitalize">
+                    <a href="/admin/posts/?status={{ $status }}">{{ $status }}</a>
                 </span>
-            </td> --}}
+            </td>
 
             <x-admin.index.table-column class="text-right text-sm font-medium">
                 <a href="/admin/posts/{{ $post->id }}/edit" class="text-blue-500 hover:text-blue-600">

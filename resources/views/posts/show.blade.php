@@ -7,7 +7,14 @@
                 <div class="col-span-5 lg:text-center lg:pt-14 mb-10">
                     <img src="{{ asset('storage/' . $post->thumbnail) }}" alt="Post image" class="rounded-xl single-post-image">
 
-                    <x-post.status :post="$post" class="mt-4 text-left" />
+                    {{-- Time & Date of post --}}
+                    <x-post.status :time="$post->published_at" class="mt-4 text-left" />
+                    
+                    {{-- No of views --}}
+                    <span class="mt-2 block text-gray-400 text-xs text-left">
+                        <i class="bi bi-eye-fill"></i>
+                        {{ number_format($post->views_count) }} views
+                    </span>
 
                     <div class="flex items-center lg:justify-left text-sm mt-4">
                         <x-post-author-card :post="$post" class="text-left" />

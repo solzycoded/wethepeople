@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('excerpt');
             $table->text('thumbnail');
             $table->text('body');
+            $table->bigInteger('views_count')->unsigned()->default(0)->index();
             $table->timestamps();
             $table->timestamp('published_at')->nullable();
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();

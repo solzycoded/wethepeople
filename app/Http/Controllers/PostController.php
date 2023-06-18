@@ -13,9 +13,15 @@ class PostController extends Controller
     // READ
     public function index(){
         $posts = Post::latest()
-            ->filter(request(['search', 'category', 'author', 'tag']))
+            ->filter(
+                array_merge(
+                    request(['search', 'category', 'author', 'tag']), 
+                    ['status' => 'published']
+                )
+            )
             ->select(['posts.*'])
-            ->paginate(9)->withQueryString(); 
+            ->paginate(9)
+            ->withQueryString(); 
 
         return view('posts.index', [
             'posts' => $posts
@@ -23,6 +29,8 @@ class PostController extends Controller
     }
 
     public function show(Post $post){ 
+        $post->countViews(); // count no of times, this page was viewed
+
         return view('posts.show', [
             'post' => $post
         ]);

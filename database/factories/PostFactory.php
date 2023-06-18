@@ -31,7 +31,8 @@ class PostFactory extends Factory
             'thumbnail' => 'thumbnails\3LqSTVXtqgBv9gymHiznL9AW32GPyNA8iv29rnBk.png',
             'excerpt' => $this->faker->sentence(),
             'body' => $this->faker->paragraph(),
-            'slug' => $this->faker->unique()->slug()
+            'slug' => $this->faker->unique()->slug(),
+            'published_at' => now(),
         ];
     }
 } 

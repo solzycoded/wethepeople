@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->seedStatus('withdrawn');
 
         // comment
-        Comment::factory(3)->create();
+        Comment::factory(20)->create();
     }
 
     protected function seedStatus($name){

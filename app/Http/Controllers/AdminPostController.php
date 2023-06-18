@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Admin\PostTagController;
 use App\Http\Controllers\Admin\StatusController;
+use App\Http\Controllers\Auth\FollowerController;
 
 use Illuminate\Validation\Rule;
 
@@ -23,22 +24,33 @@ class AdminPostController extends Controller
     }
 
     public function store(){
-        $attributes = $this->validateInput(); // validate user input
-        $attributes['user_id'] = auth()->user()->id; // get the user id, of the currently logged in user
-        $tagIds = $this->getTagIds($attributes);
+        // send mail to subscribers of the author, about the recent post
+        (new FollowerController())->sendMailToSubscribers(auth()->user()->id); // , $post
 
-        $post = Post::create($attributes);
+        // $attributes = $this->validateInput(); // validate user input
+        // $attributes['user_id'] = auth()->user()->id; // get the user id, of the currently logged in user
+        // $tagIds = $this->getTagIds($attributes);
 
-        $this->updatePublishDate($post->status_id, $post->id);
-        (new PostTagController())->store($post->id, $tagIds);
+        // $post = Post::create($attributes);
+
+        // $this->updatePublishDate($post->status_id, $post->id);
+        // (new PostTagController())->store($post->id, $tagIds);
+
+        // // send mail to subscribers of the author, about the recent post
+        // (new FollowerController())->sendMailToSubscribers($post->user_id);
 
         return redirect('/admin/posts');
     }
 
     // READ
     public function index(){
+        $posts = Post::orderBy('title')
+            ->filter(request(['status']))
+            ->paginate(50)
+            ->withQueryString(); 
+
         return view('admin.posts.index', [
-            'posts' => Post::orderBy('title')->paginate(50)
+            'posts' => $posts
         ]);
     }
 
@@ -77,13 +89,13 @@ class AdminPostController extends Controller
         return Category::orderBy('name')->get();
     }
 
-    protected function validateInput(?Post $post = null): array{ 
+    protected function validateInput(?Post $post = null): array{
         $post ??= new Post();
 
         $attributes = request()->validate([
-            'title'       => ['bail', 'required', 'max:120', Rule::unique('posts', 'title')->ignore($post)],
+            'title'       => ['bail', 'required', 'max:120', 'string', Rule::unique('posts', 'title')->ignore($post)],
             'thumbnail'   => $post->exists ? ['bail', 'image'] : ['bail', 'required', 'image'], // it's retreiving the file properties from the "file input" tag
-            'excerpt'     => 'nullable|required',
+            'excerpt'     => 'nullable|string',
             'body'        => 'bail|required',
             'category_id' => 'bail|required|integer|exists:categories,id',
             'status_id' => 'bail|required|integer|exists:status,id',
@@ -93,6 +105,7 @@ class AdminPostController extends Controller
         $attributes = $this->storeThumbnail($attributes); // store thumbnail (DELETE THE PREVIOUS IMAGE, FROM THE DIRECTORY... IF A PREVIOUS IMAGE, EXISTS)
         $attributes['tag_ids'] = isset($attributes['tag_ids']) ? $attributes['tag_ids'] : []; // set the default attribute of tag_ids, to "[]", if tag_ids isn't set, after validation
         $attributes['slug'] = $this->slug($attributes['title'], $post);
+        $attributes['excerpt'] = empty($attributes['excerpt']) ? substr($attributes['body'], 0, 20) : $attributes['excerpt'];
 
         return $attributes;
     }

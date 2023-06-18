@@ -13,6 +13,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionController; 
 
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\Auth\FollowerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,6 +78,9 @@ Route::middleware('guest')->group(function(){
 // POSTS
 Route::get('/posts/{post:slug}', [PostController::class, 'show']);
 Route::post('/posts/{post:slug}/comment', [PostCommentsController::class, 'store']);
+
+// FOLLOW or UNFOLLOW AUTHOR
+Route::post('/follow-author', [FollowerController::class, 'update'])->middleware('auth');
 
 // LOGOUT
 Route::post('/logout', [SessionController::class, 'destroy'])->middleware('auth');

@@ -9,19 +9,15 @@ class Post extends Model
 {
     use HasFactory;
 
-    // protected $guarded = ['id'];
+    protected $with = ['category', 'author', 'postTags', 'status'];
 
-    protected $with = ['category', 'author', 'postTags'];
+    // i added this, cos i wanted to use the "diffForHumans()" function, in the view for (post)
+    protected $dates = ['created_at', 'updated_at', 'published_at'];
 
-    // public function getRouteKeyName()
-    // {
-    //     return 'slug';
-    // }
-    
     // DELETE relations
     public function delete() {
-        $this->posts()->comments();
-        $this->posts()->postTags();
+        $this->comments()->delete();
+        $this->postTags()->delete();
         parent::delete();
     }
 
@@ -32,6 +28,10 @@ class Post extends Model
 
     public function author(){
         return $this->belongsTo(User::class, 'user_id');
+    }   
+
+    public function status(){
+        return $this->belongsTo(Status::class);
     }   
 
     // PARENT TO
@@ -60,21 +60,27 @@ class Post extends Model
         }
 
         // ?categroy=query
-        $query->when($filters['category'] ?? false, 
-            fn($query, $category) => 
-                $query->whereHas('category', 
-                    fn($query) => 
-                        $query->where('slug', $category)
-            )
-        );
-
+        $this->filterQuery($query, 'category', $filters['category'] ?? false, 'slug');
         // ?author=query
-        $query->when($filters['author'] ?? false, 
-            fn($query, $author) => 
-                $query->whereHas('author', 
+        $this->filterQuery($query, 'author', $filters['author'] ?? false, 'username');
+        // status
+        $this->filterQuery($query, 'status', $filters['status'] ?? false, 'name');
+    }  
+
+    protected function filterQuery($query, $table, $filter, $column){
+        return $query->when($filter ?? false, 
+            fn($query, $filter) => 
+                $query->whereHas($table, 
                     fn($query) => 
-                        $query->where('username', $author)
+                        $query->where($column, $filter)
             )
         );
-    }  
+    }
+
+    // OTHERS
+    public function countViews() {
+        $this->views_count++;
+
+        return $this->save();
+    }
 }
