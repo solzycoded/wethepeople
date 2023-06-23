@@ -4,15 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 
-use App\Models\Follower;
+use App\Models\Bookmark;
 
-use App\Services\Phpmailer\Mail;
-
-class FollowerController extends Controller
+class BookmarkController extends Controller
 {
     // CREATE
     private function store($attributes){
-        return Follower::firstOrCreate($attributes);
+        return Bookmark::firstOrCreate($attributes);
     }
 
     // UPDATE
@@ -21,11 +19,11 @@ class FollowerController extends Controller
 
         $saved = false;
 
-        if($attributes['follow']){
-            unset($attributes['follow']);
-            $follower = $this->store($attributes);
+        if($attributes['bookmark']){
+            unset($attributes['bookmark']);
+            $bookmark = $this->store($attributes);
             
-            $saved = isset($follower->id);
+            $saved = isset($bookmark->id);
         }
         else{
             $saved = $this->destroy($attributes) ? true : false;
@@ -41,25 +39,24 @@ class FollowerController extends Controller
 
     // DESTROY
     private function destroy($attributes){
-        return Follower::where('follower_id', $attributes['follower_id'])
-            ->where('followee_id', $attributes['followee_id'])
+        return Bookmark::where('post_id', $attributes['post_id'])
+            ->where('user_id', $attributes['user_id'])
             ->delete();
     }
 
     // OTHERS
     protected function validateInput(){
-        $validation =  'bail|required|integer|exists:users,id';
-
-        // IF follow attribute is "true", set follow to 1, ELSE set it to 0
+        // IF bookmark attribute is "true", set bookmark to 1, ELSE set it to 0
         request()->merge([
-            'follow' => (request('follow')=='true' ? 1 : 0)
+            'bookmark' => (request('bookmark')=='true' ? 1 : 0)
         ]);
+
         // validate attributes
         $attributes = request()->validate([
-            'follower_id' => $validation,
-            'followee_id' => $validation,
-            'follow'   => 'bail|required|boolean'
+            'post_id' => 'bail|required|integer|exists:posts,id',
+            'bookmark'   => 'bail|required|boolean'
         ]);
+        $attributes['user_id'] = auth()->user()->id;
 
         return $attributes;
     }

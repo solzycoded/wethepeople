@@ -34,11 +34,15 @@
                                 Welcome, {{ auth()->user()->name }}!
                             </button>
                         </x-slot>
-
+                        
                         {{-- DROP DOWNs --}}
-                        {{-- home page --}}
+                        {{-- Home Page --}}
                         <x-dropdown-item href="/" :active="request()->is('/')">
                             Home
+                        </x-dropdown-item>
+                        {{-- Home Page --}}
+                        <x-dropdown-item href="/bookmarks" :active="request()->is('bookmarks')">
+                            Saved Posts
                         </x-dropdown-item>
 
                         {{-- ONLY FOR ADMIN --}}
@@ -69,8 +73,6 @@
                         
                         <form id="logout-form" method="POST" action="/logout" class="hidden">
                             @csrf
-
-                            {{-- <button type="submit" style="color: blue">Log Out</button> --}}
                         </form>
                     </x-dropdown>
                 @else
@@ -144,40 +146,13 @@
 
 <script src="/js/request/ajax.js"></script>
 
-<script>
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+{{-- posts --}}
+<script src="/js/posts/follow-author.js"></script>
+<script src="/js/posts/posts.js"></script>
 
-    const something = function(){
-        $('#follow-btn').click(function () { 
-            let followBtn = $(this);
-            let content = $.trim(followBtn.text()).toLowerCase();
-
-            let follow = content=="follow" ? true : false;
-
-            let follower = followBtn.attr('follower');
-            let followee = followBtn.attr('followee');
-
-            const ajax = new Ajax(
-                'POST', 
-                '/follow-author', 
-                {follower_id: follower, followee_id: followee, follow: follow}
-            );
-            ajax.request(function (response){}, failureResponse);
-        });
-    }
-
-    const failureResponse = function (response){
-        // trigger failure action (the follow button would be unfollowed)
-        $('#follow-btn').click();
-    }
-
-    something();
-</script>
-
+{{-- post --}}
+<script src="/js/post/bookmark/bookmark-post.js"></script>
+<script src="/js/post/bookmark/bookmark.js"></script>
 
 {{-- ABOUT US IDEAS --}}
     {{-- 1. this is a platform of the people, built "for the people", by Solzy. on here feel free, to say what you want, tell your story, anonymously. --}}

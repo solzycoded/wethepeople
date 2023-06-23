@@ -5,6 +5,9 @@
 
             <article class="max-w-4xl mx-auto lg:grid lg:grid-cols-12 gap-x-10">
                 <div class="col-span-5 lg:text-center lg:pt-14 mb-10">
+                    {{-- bookmark post --}}
+                    <x-post.bookmark :post="$post" />
+
                     <img src="{{ asset('storage/' . $post->thumbnail) }}" alt="Post image" class="rounded-xl single-post-image">
 
                     {{-- Time & Date of post --}}

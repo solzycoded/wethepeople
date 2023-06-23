@@ -27,7 +27,7 @@ class User extends Authenticatable
     protected $table = 'users';
     protected $guarded = [];
 
-    protected $with = ['followers'];
+    protected $with = ['followers', 'bookmarks'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -59,23 +59,43 @@ class User extends Authenticatable
     }
 
     // CHILD: followers
-    public function followers(){
+    public function followers(){ // all of the people that have followed a particular user
+        return $this->hasMany(Follower::class, 'followee_id');
+    }
+
+    public function followees(){ // of the the people a particular user have followed
         return $this->hasMany(Follower::class, 'follower_id');
     }
 
-    public function followees(){
-        return $this->hasMany(Follower::class, 'followee_id');
+    public function bookmarks(){
+        return $this->hasMany(Bookmark::class);
     }
 
     // SCOPES
     public function scopeFollowing($query, $followerId){
-        return $query->when($followerId ?? false, 
-            fn($query, $followerId) => 
-                $query->whereHas('followers', 
-                    fn($query) => 
-                        $query
-                            ->where('follower_id', $followerId)
-                            ->where('followee_id', $this->id)
+        return $this->parametersExists($query, 
+            $followerId, 
+            'followers', 
+            ['one' => 'follower_id', 'two' => 'followee_id']
+        );
+    }
+
+    public function scopeSavedPost($query, $postId){
+        return $this->parametersExists($query, 
+            $postId, 
+            'bookmarks', 
+            ['one' => 'post_id', 'two' => 'user_id']
+        );
+    }
+
+    // OTHERS
+    protected function parametersExists($query, $value, $table, $columns){
+        return $query->when($value ?? false, 
+            fn($query, $value) => 
+                $query->whereHas($table, 
+                    fn($query) => $query
+                            ->where($columns['one'], $value)
+                            ->where($columns['two'], $this->id)
             )
         )->exists();
     }

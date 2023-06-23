@@ -12,20 +12,26 @@ class PostController extends Controller
 
     // READ
     public function index(){
+        $posts = $this->posts()
+            ->select(['posts.*'])
+            ->paginate(9)
+            ->withQueryString();
+
+        return view('posts.index', [
+            'posts' => $posts
+        ]);
+    }
+
+    public function posts(){
         $posts = Post::latest()
             ->filter(
                 array_merge(
                     request(['search', 'category', 'author', 'tag']), 
                     ['status' => 'published']
                 )
-            )
-            ->select(['posts.*'])
-            ->paginate(9)
-            ->withQueryString(); 
-
-        return view('posts.index', [
-            'posts' => $posts
-        ]);
+            );
+        
+        return $posts;
     }
 
     public function show(Post $post){ 

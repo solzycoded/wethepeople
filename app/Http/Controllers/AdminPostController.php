@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Admin\PostTagController;
 use App\Http\Controllers\Admin\StatusController;
-use App\Http\Controllers\Auth\FollowerController;
+use App\Http\Controllers\Admin\MailerController;
 
 use Illuminate\Validation\Rule;
 
@@ -12,6 +12,7 @@ use App\Models\Post;
 use App\Models\Category;
 use App\Models\Tag;
 use App\Models\Status;
+use Illuminate\Mail\Mailer;
 
 class AdminPostController extends Controller
 {
@@ -24,9 +25,6 @@ class AdminPostController extends Controller
     }
 
     public function store(){
-        // send mail to subscribers of the author, about the recent post
-        (new FollowerController())->sendMailToSubscribers(auth()->user()->id); // , $post
-
         // $attributes = $this->validateInput(); // validate user input
         // $attributes['user_id'] = auth()->user()->id; // get the user id, of the currently logged in user
         // $tagIds = $this->getTagIds($attributes);
@@ -36,8 +34,8 @@ class AdminPostController extends Controller
         // $this->updatePublishDate($post->status_id, $post->id);
         // (new PostTagController())->store($post->id, $tagIds);
 
-        // // send mail to subscribers of the author, about the recent post
-        // (new FollowerController())->sendMailToSubscribers($post->user_id);
+        // send mail to subscribers of the author, about the recent post
+        (new MailerController())->newPostAlert(Post::join('users', 'users.id', 'posts.user_id')->firstWhere('username', 'solzy'));
 
         return redirect('/admin/posts');
     }

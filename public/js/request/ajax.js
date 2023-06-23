@@ -19,7 +19,7 @@ class Ajax{
                 }
             },
             error: function (xhr) {
-                console.log(xhr.responseJSON);
+                console.log(xhr);
             }
         });
     }

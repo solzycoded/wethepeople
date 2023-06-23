@@ -14,6 +14,8 @@ use App\Http\Controllers\SessionController;
 
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\Auth\FollowerController;
+use App\Http\Controllers\Auth\BookmarkController as AuthBookmarkController;
+use App\Http\Controllers\BookmarkController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +27,7 @@ use App\Http\Controllers\Auth\FollowerController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 // ADMIN
 Route::middleware('can:admin')->group(function(){
     // DASHBOARD
@@ -82,5 +85,21 @@ Route::post('/posts/{post:slug}/comment', [PostCommentsController::class, 'store
 // FOLLOW or UNFOLLOW AUTHOR
 Route::post('/follow-author', [FollowerController::class, 'update'])->middleware('auth');
 
+// BOOKMARK
+Route::post('/bookmark-post', [AuthBookmarkController::class, 'update'])->middleware('auth');
+Route::get('/bookmarks', [BookmarkController::class, 'index']);
+
 // LOGOUT
 Route::post('/logout', [SessionController::class, 'destroy'])->middleware('auth');
+
+// WILL REMOVE SOON
+// Route::get('/new-post-alert', function(){
+//     $post = \App\Models\Post::join('users', 'users.id', 'posts.user_id')->firstWhere('username', 'solzy');
+
+//     return view('admin.posts.mail.new-post')->with([
+//         'title' => $post->title,
+//         'excerpt' => $post->excerpt,
+//         'slug' => $post->slug,
+//         'author' => $post->author
+//     ]);
+// });

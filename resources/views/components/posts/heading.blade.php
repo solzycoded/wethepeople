@@ -2,7 +2,7 @@
 
 @php
     $request = request()->only(['author']);
-    $userId = isset(auth()->user()->id) ?  : 0;
+    $userId = isset(auth()->user()->id) ? auth()->user()->id : 0;
 @endphp
 
 @if(isset($request['author']))
@@ -13,7 +13,7 @@
             <small class="text-blue-500">{{ $request['author'] }}</small>
         </p>
 
-        @if($userId)
+        @if($userId && $author->id!==$userId)
             <button @click="toggle()"
                 type="button"
                 id="follow-btn"

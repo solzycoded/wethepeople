@@ -9,7 +9,7 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $with = ['category', 'author', 'postTags', 'status'];
+    protected $with = ['category', 'author', 'postTags', 'status', 'bookmarks'];
 
     // i added this, cos i wanted to use the "diffForHumans()" function, in the view for (post)
     protected $dates = ['created_at', 'updated_at', 'published_at'];
@@ -43,7 +43,16 @@ class Post extends Model
         return $this->hasMany(PostTag::class);
     }
 
+    public function bookmarks(){
+        return $this->hasMany(Bookmark::class);
+    }
+
     // SCOPES
+    public function scopeBookmarks($query, $userId){
+        // status
+        $this->filterQuery($query, 'bookmarks', $userId ?? false, 'user_id');
+    }
+
     public function scopeFilter($query, array $filters){
         $query->when($filters['search'] ?? false, fn($query, $search) => 
             $query->where(fn($query) =>
