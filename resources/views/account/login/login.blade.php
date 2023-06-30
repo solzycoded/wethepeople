@@ -5,7 +5,7 @@
             <x-panel>
                 <h1 class="text-center font-bold text-xl">Log in!</h1>
 
-                <form method="POST" action="/portfolios/wethepeople/public/login" class="mt-10">
+                <form method="POST" action="/login" class="mt-10">
                     @csrf
 
                     <!-- email -->

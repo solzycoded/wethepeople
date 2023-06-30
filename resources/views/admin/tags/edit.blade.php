@@ -1,6 +1,6 @@
 <x-layout>
     <x-admin.setting :heading="'Edit Post: <small>' . $tag->name . '</small>'">
-        <form method="POST" action="/portfolios/wethepeople/public/admin/tags/{{ $tag->id }}" enctype="multipart/form-data">     
+        <form method="POST" action="/admin/tags/{{ $tag->id }}" enctype="multipart/form-data">     
             @csrf
             @method('PATCH')
 

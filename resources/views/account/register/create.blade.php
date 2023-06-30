@@ -7,7 +7,7 @@
 
                 <h1 class="text-center font-bold text-xl">Register!</h1>
 
-                <form method="POST" action="/portfolios/wethepeople/public/register" class="mt-10">
+                <form method="POST" action="/register" class="mt-10">
                     @csrf
                     
                     @if($errors->any())

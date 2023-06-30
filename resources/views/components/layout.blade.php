@@ -4,7 +4,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 
 <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-<link href="{{ env('WEB_URL_PREFIX') }}css/app.css" rel="stylesheet">
+<link href="css/app.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -16,9 +16,9 @@
     <section class="px-6 py-8">
         <nav class="md:flex md:justify-between md:items-center">
             <div>
-                <a href="{{ env('WEB_URL_PREFIX') }}">
+                <a href="/">
                     {{-- /images/logo.svg --}}
-                    <img src="{{ env('WEB_URL_PREFIX') }}images/my/logo (no-bg).png" alt="wethepeople Logo" width="140" height="16">
+                    <img src="/images/my/logo (no-bg).png" alt="wethepeople Logo" width="140" height="16">
                 </a>
             </div>
 
@@ -34,11 +34,11 @@
                         
                         {{-- DROP DOWNs --}}
                         {{-- Home Page --}}
-                        <x-dropdown-item href="{{ env('WEB_URL_PREFIX') }}" :active="request()->is('/')">
+                        <x-dropdown-item href="" :active="request()->is('/')">
                             Home
                         </x-dropdown-item>
                         {{-- Home Page --}}
-                        <x-dropdown-item href="{{ env('WEB_URL_PREFIX') }}bookmarks" :active="request()->is('bookmarks')">
+                        <x-dropdown-item href="bookmarks" :active="request()->is('bookmarks')">
                             Saved Posts
                         </x-dropdown-item>
 
@@ -55,7 +55,7 @@
                                 ];
                             @endphp
                             @foreach ($dropDownMenus as $item)
-                                <x-dropdown-item href="/portfolios/wethepeople/public/{{ $item['link'] }}" :active="request()->is($item['link'])">
+                                <x-dropdown-item href="/{{ $item['link'] }}" :active="request()->is($item['link'])">
                                     {{ $item['title'] }}
                                 </x-dropdown-item>
                             @endforeach
@@ -68,14 +68,14 @@
                             Log Out
                         </x-dropdown-item>
                         
-                        <form id="logout-form" method="POST" action="{{ env('WEB_URL_PREFIX') }}logout" class="hidden">
+                        <form id="logout-form" method="POST" action="logout" class="hidden">
                             @csrf
                         </form>
                     </x-dropdown>
                 @else
 
-                    <a href="{{ env('WEB_URL_PREFIX') }}register" class="text-xs font-bold uppercase">Register</a>
-                    <a href="{{ env('WEB_URL_PREFIX') }}login" class="text-xs font-bold uppercase ml-3">Login</a>
+                    <a href="register" class="text-xs font-bold uppercase">Register</a>
+                    <a href="login" class="text-xs font-bold uppercase ml-3">Login</a>
                 
                 @endguest
 
@@ -89,7 +89,7 @@
         
         <footer id="newsletter" class="bg-gray-100 border border-black border-opacity-5 rounded-xl text-center py-16 px-10 mt-16">
             {{-- /images/lary-newsletter-icon.svg --}}
-            <img src="{{ env('WEB_URL_PREFIX') }}images/my/icon (no-bg).png" alt="wethepeople icon" class="mx-auto -mb-1" style="width: 220px;">
+            <img src="images/my/icon (no-bg).png" alt="wethepeople icon" class="mx-auto -mb-1" style="width: 220px;">
             
             <h5 class="text-3xl">Stay in touch with the latest gist</h5>
             <p class="text-sm mt-3">Promise to keep the inbox clean. No spamming.</p>
@@ -97,12 +97,12 @@
             <div class="mt-10">
                 <div class="relative inline-block mx-auto lg:bg-gray-200 rounded-full">
 
-                    <form method="POST" action="{{ env('WEB_URL_PREFIX') }}newsletter" class="lg:flex text-sm">
+                    <form method="POST" action="newsletter" class="lg:flex text-sm">
                         @csrf 
 
                         <div class="lg:py-3 lg:px-5 flex items-center">
                             <label for="email" class="hidden lg:inline-block">
-                                <img src="{{ env('WEB_URL_PREFIX') }}images/mailbox-icon.svg" alt="mailbox letter">
+                                <img src="images/mailbox-icon.svg" alt="mailbox letter">
                             </label>
 
                             <div>
@@ -141,15 +141,15 @@
 {{-- SCRIPTS --}}
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 
-<script src="{{ env('WEB_URL_PREFIX') }}js/request/ajax.js"></script>
+<script src="js/request/ajax.js"></script>
 
 {{-- posts --}}
-<script src="{{ env('WEB_URL_PREFIX') }}js/posts/follow-author.js"></script>
-<script src="{{ env('WEB_URL_PREFIX') }}js/posts/posts.js"></script>
+<script src="js/posts/follow-author.js"></script>
+<script src="js/posts/posts.js"></script>
 
 {{-- post --}}
-<script src="{{ env('WEB_URL_PREFIX') }}js/post/bookmark/bookmark-post.js"></script>
-<script src="{{ env('WEB_URL_PREFIX') }}js/post/bookmark/bookmark.js"></script>
+<script src="js/post/bookmark/bookmark-post.js"></script>
+<script src="js/post/bookmark/bookmark.js"></script>
 
 {{-- ABOUT US IDEAS --}}
     {{-- 1. this is a platform of the people, built "for the people", by Solzy. on here feel free, to say what you want, tell your story, anonymously. --}}

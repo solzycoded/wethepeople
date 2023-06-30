@@ -9,7 +9,7 @@
                     
 <div {{ $attributes(['class' => "ml-3"]) }}>
     <h5 class="font-bold">
-        <a href="{{ env('WEB_URL_PREFIX') }}?author={{ $author->username }}" class="capitalize">
+        <a href="?author={{ $author->username }}" class="capitalize">
             {{ $author->name }}
         </a>
     </h5>

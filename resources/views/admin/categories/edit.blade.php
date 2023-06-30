@@ -1,6 +1,6 @@
 <x-layout>
     <x-admin.setting :heading="'Edit Post: <small>' . $category->name . '</small>'">
-        <form method="POST" action="/portfolios/wethepeople/public/admin/categories/{{ $category->id }}" enctype="multipart/form-data">     
+        <form method="POST" action="/admin/categories/{{ $category->id }}" enctype="multipart/form-data">     
             @csrf
             @method('PATCH')
 

@@ -30,7 +30,7 @@
                     @endphp
 
                     <li>
-                        <a href="{{ env('WEB_URL_PREFIX') }}admin/{{ $sidebar['link'] }}" class="{{ request()->is('admin/' . $sidebar['link']) ? 'text-blue-500' : '' }}">
+                        <a href="admin/{{ $sidebar['link'] }}" class="{{ request()->is('admin/' . $sidebar['link']) ? 'text-blue-500' : '' }}">
                             {{ $sidebar['title'] }}
                         </a>
                     </li>

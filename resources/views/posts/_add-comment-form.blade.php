@@ -1,5 +1,5 @@
 <x-panel>
-    <form method="POST" action="/portfolios/wethepeople/public/posts/{{ $post->slug }}/comment">
+    <form method="POST" action="/posts/{{ $post->slug }}/comment">
         @csrf
 
         <header class="flex items-center">
@@ -30,9 +30,9 @@
         @else
             <div class="mt-5">
                 <p class="font-semibold">
-                    <a href="{{ env('WEB_URL_PREFIX') }}login" class="text-blue-600 hover:underline">Login</a> 
+                    <a href="login" class="text-blue-600 hover:underline">Login</a> 
                     <small>or</small>
-                    <a href="{{ env('WEB_URL_PREFIX') }}register" class="text-blue-600 hover:underline">Register</a>
+                    <a href="register" class="text-blue-600 hover:underline">Register</a>
                 </p>
             </div>
         @endauth

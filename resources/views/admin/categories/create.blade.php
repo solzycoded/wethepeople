@@ -1,6 +1,6 @@
 <x-layout>
     <x-admin.setting heading="Create New Category">
-        <form method="POST" action="/portfolios/wethepeople/public/admin/categories" enctype="multipart/form-data">
+        <form method="POST" action="/admin/categories" enctype="multipart/form-data">
             @csrf
 
             {{-- category --}}

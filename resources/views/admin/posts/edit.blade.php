@@ -1,6 +1,6 @@
 <x-layout>
     <x-admin.setting :heading="'Edit Post: <small>' . $post->title . '</small>'">
-        <form method="POST" action="/portfolios/wethepeople/public/admin/posts/{{ $post->id }}" enctype="multipart/form-data">     
+        <form method="POST" action="/admin/posts/{{ $post->id }}" enctype="multipart/form-data">     
             @csrf
             @method('PATCH')
             
@@ -71,7 +71,7 @@
                 <p>
                     <small>
                         Can't find the tag, you want? Create one 
-                        <a href="{{ env('WEB_URL_PREFIX') }}admin/tags/create" class="text-blue-500">here</a>
+                        <a href="admin/tags/create" class="text-blue-500">here</a>
                     </small>
                 </p>
 

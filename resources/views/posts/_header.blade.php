@@ -3,7 +3,7 @@
         Latest gist from <span class="text-blue-500"><b>thepeople</b></span>
     </h1>
  
-    <!-- <h2 class="inline-flex mt-2">By Lary Laracore <img src="/portfolios/wethepeople/public/images/lary-head.svg" alt="Head of Lary the mascot"></h2> -->
+    <!-- <h2 class="inline-flex mt-2">By Lary Laracore <img src="/images/lary-head.svg" alt="Head of Lary the mascot"></h2> -->
 
    <!--  <p class="text-sm mt-14">
         Another year. Another update. We're refreshing the popular Laravel series with new content.

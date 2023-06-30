@@ -3,7 +3,7 @@
     @if (count($tags)==0)
         <tr>
             <x-admin.index.table-column>
-                No tag exists yet. But you can create one, <a href="{{ env('WEB_URL_PREFIX') }}admin/tags/create" class="text-blue-500">here</a>
+                No tag exists yet. But you can create one, <a href="admin/tags/create" class="text-blue-500">here</a>
             </x-admin.index.table-column>
         </tr>
     @endif
@@ -13,7 +13,7 @@
             <x-admin.index.table-column>
                 <div class="flex items-center">
                     <div class="text-sm font-medium text-gray-900">
-                        <a href="{{ env('WEB_URL_PREFIX') }}?tag={{ $tag->slug }}">
+                        <a href="?tag={{ $tag->slug }}">
                             {{ $tag->name }}
                         </a>
                     </div>
@@ -21,13 +21,13 @@
             </x-admin.index.table-column>
 
             <x-admin.index.table-column class="text-right text-sm font-medium">
-                <a href="{{ env('WEB_URL_PREFIX') }}admin/tags/{{ $tag->id }}/edit" class="text-blue-500 hover:text-blue-600">
+                <a href="admin/tags/{{ $tag->id }}/edit" class="text-blue-500 hover:text-blue-600">
                     Edit
                 </a>
             </x-admin.index.table-column>
 
             <x-admin.index.table-column class="text-right text-sm font-medium">
-                <form method="POST" action="/portfolios/wethepeople/public/admin/tags/{{ $tag->id }}">
+                <form method="POST" action="/admin/tags/{{ $tag->id }}">
                     @csrf
                     @method('DELETE')
 

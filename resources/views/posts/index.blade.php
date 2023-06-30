@@ -14,7 +14,7 @@
         @else
             <p class="text-center">
                 @if(request()->is('bookmarks'))
-                    You currently don't have any bookmarked / saved posts.<br><br>You can select a post <a href="{{ env('WEB_URL_PREFIX') }}" class="text-blue-500">here</a>
+                    You currently don't have any bookmarked / saved posts.<br><br>You can select a post <a href="" class="text-blue-500">here</a>
                 @else
                     No posts yet. Please check back later.
                 @endif

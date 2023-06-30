@@ -1,6 +1,6 @@
 <x-layout>
     <x-admin.setting heading="Publish New Post">
-        <form method="POST" action="/portfolios/wethepeople/public/admin/posts" enctype="multipart/form-data">
+        <form method="POST" action="/admin/posts" enctype="multipart/form-data">
             @csrf
 
             {{-- title --}}
@@ -63,7 +63,7 @@
                 <p>
                     <small>
                         Can't find the tag, you want? Create one 
-                        <a href="{{ env('WEB_URL_PREFIX') }}admin/tags/create" class="text-blue-500">here</a>
+                        <a href="admin/tags/create" class="text-blue-500">here</a>
                     </small>
                 </p>
                 <x-form.error :name="'tag_ids'" />

@@ -28,7 +28,7 @@ class PostFactory extends Factory
             'category_id' => Category::factory(),
             'status_id' => rand(1, count($status) - 1),
             'title' => $this->faker->unique()->sentence(),
-            'thumbnail' => 'thumbnails\3LqSTVXtqgBv9gymHiznL9AW32GPyNA8iv29rnBk.png',
+            'thumbnail' => 'thumbnails\200286.jpg',
             'excerpt' => $this->faker->sentence(),
             'body' => $this->faker->paragraph(),
             'slug' => $this->faker->unique()->slug(),

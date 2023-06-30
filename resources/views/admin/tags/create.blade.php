@@ -1,6 +1,6 @@
 <x-layout>
     <x-admin.setting heading="Create New Tag">
-        <form method="POST" action="/portfolios/wethepeople/public/admin/tags" enctype="multipart/form-data">
+        <form method="POST" action="/admin/tags" enctype="multipart/form-data">
             @csrf
 
             {{-- tag --}}

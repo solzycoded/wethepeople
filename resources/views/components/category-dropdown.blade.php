@@ -19,7 +19,7 @@
 
     <!-- links -->
     <x-dropdown-item 
-        href="{{ env('WEB_URL_PREFIX') }}?{{ $searchQuery }}" 
+        href="?{{ $searchQuery }}" 
         :active="request()->routeIs('home')">
         All
     </x-dropdown-item> 
@@ -31,7 +31,7 @@
         @endphp 
 
         <x-dropdown-item 
-            href="{{ env('WEB_URL_PREFIX') }}?category={{ $category->slug }}{{ $searchQuery }}" 
+            href="?category={{ $category->slug }}{{ $searchQuery }}" 
             :active="$isSlug">
             {{ ucwords($category->name) }}
         </x-dropdown-item>
