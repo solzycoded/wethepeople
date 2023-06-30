@@ -1,22 +1,22 @@
 <x-layout>
     <x-admin.setting heading="Publish New Post">
-        <form method="POST" action="/admin/posts" enctype="multipart/form-data">
+        <form method="POST" action="/portfolios/wethepeople/public/admin/posts" enctype="multipart/form-data">
             @csrf
 
             {{-- title --}}
-            <x-form.input :name="'title'" value="something" maxlength="120" required />
+            <x-form.input :name="'title'" maxlength="120" required />
 
             {{-- thumbnail --}}
-            <x-form.input :name="'thumbnail'" value="something" type="file" required />
+            <x-form.input :name="'thumbnail'" type="file" required />
             
             {{-- excerpt (TEXTAREA) --}}
             <x-form.textarea :name="'excerpt'">
-                {{ old('excerpt') }}something
+                {{ old('excerpt') }}
             </x-form.textarea>
             
             {{-- body (TEXTAREA) --}}
             <x-form.textarea :name="'body'">
-                {{ old('body') }} smething
+                {{ old('body') }}
             </x-form.textarea>
    
             {{-- category (SELECT) --}}
@@ -32,7 +32,7 @@
                     <option value="" selected>Choose a category</option>
                     
                     @foreach ($categories as $category)
-                        <option selected {{ old('category_id')==$category->id ? 'selected' : '' }} 
+                        <option {{ old('category_id')==$category->id ? 'selected' : '' }} 
                             value="{{ $category->id }}">
                             {{ ucwords($category->name) }}
                         </option>
@@ -63,7 +63,7 @@
                 <p>
                     <small>
                         Can't find the tag, you want? Create one 
-                        <a href="/admin/tags/create" class="text-blue-500">here</a>
+                        <a href="{{ env('WEB_URL_PREFIX') }}admin/tags/create" class="text-blue-500">here</a>
                     </small>
                 </p>
                 <x-form.error :name="'tag_ids'" />

@@ -28,6 +28,10 @@ use App\Http\Controllers\BookmarkController;
 |
 */
 
+// Route::get('/linkstorage', function () {
+//     Artisan::call('storage:link');
+// });
+
 // ADMIN
 Route::middleware('can:admin')->group(function(){
     // DASHBOARD

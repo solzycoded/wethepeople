@@ -1,0 +1,36 @@
+/* HTML */
+html { 
+    scroll-behavior: smooth !important;
+}
+
+/* TAILWIND adjustments */
+.text-blue-500, .text-blue-300 {
+    color: #0CC0DF !important;
+}
+
+.bg-blue-500 {
+    background-color: #0CC0DF !important;
+}
+
+.border-blue-300 {
+    border-color: #0CC0DF !important;
+}
+
+/* POSTS */
+.post-card-image, .post-featured-image, .single-post-image {
+    width: 100% !important;
+}
+
+.post-card-image { 
+    height: 300px !important;
+}
+
+.post-featured-image {
+    height: 350px !important;
+}
+
+/* POST */
+.single-post-image {
+    height: inherit !important; 
+    max-height: 250px !important;
+}

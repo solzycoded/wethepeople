@@ -12,7 +12,6 @@ use App\Models\Post;
 use App\Models\Category;
 use App\Models\Tag;
 use App\Models\Status;
-use Illuminate\Mail\Mailer;
 
 class AdminPostController extends Controller
 {
@@ -25,17 +24,17 @@ class AdminPostController extends Controller
     }
 
     public function store(){
-        // $attributes = $this->validateInput(); // validate user input
-        // $attributes['user_id'] = auth()->user()->id; // get the user id, of the currently logged in user
-        // $tagIds = $this->getTagIds($attributes);
+        $attributes = $this->validateInput(); // validate user input
+        $attributes['user_id'] = auth()->user()->id; // get the user id, of the currently logged in user
+        $tagIds = $this->getTagIds($attributes);
 
-        // $post = Post::create($attributes);
+        $post = Post::create($attributes);
 
-        // $this->updatePublishDate($post->status_id, $post->id);
-        // (new PostTagController())->store($post->id, $tagIds);
+        $this->updatePublishDate($post->status_id, $post->id);
+        (new PostTagController())->store($post->id, $tagIds);
 
         // send mail to subscribers of the author, about the recent post
-        (new MailerController())->newPostAlert(Post::join('users', 'users.id', 'posts.user_id')->firstWhere('username', 'solzy'));
+        // (new MailerController())->newPostAlert(Post::join('users', 'users.id', 'posts.user_id')->firstWhere('username', 'solzy'));
 
         return redirect('/admin/posts');
     }
@@ -109,8 +108,10 @@ class AdminPostController extends Controller
     }
 
     private function storeThumbnail($attributes){
+        // 'https://thesolomonfidelis.com' . env('WEB_URL_PREFIX') . 'storage/
         if(isset($attributes['thumbnail'])){
             $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails'); // store file, in "thumbnails" folder and return the file path
+            // dd(is_dir('https://thesolomonfidelis.com' . env('WEB_URL_PREFIX') . 'storage/thumbnails'));
         }
 
         return $attributes;
@@ -136,6 +137,7 @@ class AdminPostController extends Controller
 
         $post = Post::find($postId);
         $post->published_at = $isPublished ? now() : null;
+        
         $post->save();
     }
 }

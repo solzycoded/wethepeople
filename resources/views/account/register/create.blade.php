@@ -7,7 +7,7 @@
 
                 <h1 class="text-center font-bold text-xl">Register!</h1>
 
-                <form method="POST" action="/register" class="mt-10">
+                <form method="POST" action="/portfolios/wethepeople/public/register" class="mt-10">
                     @csrf
                     
                     @if($errors->any())
@@ -19,13 +19,13 @@
                     @endif
 
                     <!-- name -->
-                    <x-form.input :name="'name'" value="Solomon Fidelis" />
+                    <x-form.input :name="'name'" />
                     <!-- username -->
-                    <x-form.input :name="'username'" value="solzy" />
+                    <x-form.input :name="'username'" />
                     <!-- email -->
-                    <x-form.input :name="'email'" type="email" autocomplete="username" value="solzyfrenzy1@gmail.com" />
+                    <x-form.input :name="'email'" type="email" autocomplete="username" />
                     <!-- password -->
-                    <x-form.input :name="'password'" type="password" autocomplete="new-password" value="passworded" />
+                    <x-form.input :name="'password'" type="password" autocomplete="new-password" />
                     
                     <!-- submit button -->
                     <x-form.submit-button>Submit</x-form.submit-button>
