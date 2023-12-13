@@ -84,9 +84,9 @@
                 </a>
             </div>
         </nav>
-        
+
         {{ $slot }}
-        
+
         <footer id="newsletter" class="bg-gray-100 border border-black border-opacity-5 rounded-xl text-center py-16 px-10 mt-16">
             {{-- /images/lary-newsletter-icon.svg --}}
             <img src="images/my/icon (no-bg).png" alt="wethepeople icon" class="mx-auto -mb-1" style="width: 220px;">
